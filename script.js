@@ -41,4 +41,21 @@ function removeAllItems() {
   list.innerHTML = '';
 }
 
-clearButton.addEventListener('click', removeAllItems)
+clearButton.addEventListener('click', removeAllItems);
+
+// Remover itens finalizados da lista
+const clearFinishButton = document.getElementById('remover-finalizados');
+function removeFinishItems() {
+  let count = 0;
+  for (let i = 0; i < listChilds.length; i += 1) {
+    if (listChilds[i].className === 'completed') {
+      count += 1;
+      listChilds[i].remove();
+      for (let i2 = 1; i2 <= count; i2 += 1) {
+        removeFinishItems();
+      }
+    }
+  }
+}
+
+clearFinishButton.addEventListener('click', removeFinishItems);
