@@ -33,3 +33,12 @@ function addTask() {
   createLi.addEventListener('dblclick', finishTask);
 }
 buttonAdd.addEventListener('click', addTask);
+
+// Remover itens da lista
+const clearButton = document.getElementById('apaga-tudo');
+function removeAllItems() {
+  console.log(listChilds);
+  list.innerHTML = '';
+}
+
+clearButton.addEventListener('click', removeAllItems)
