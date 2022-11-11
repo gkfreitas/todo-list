@@ -59,3 +59,44 @@ function removeFinishItems() {
 }
 
 clearFinishButton.addEventListener('click', removeFinishItems);
+
+// // Mover para cima ou para baixo item selecionado.
+
+// const buttonMoveUp = document.getElementById('mover-cima');
+// const buttonMoveDown = document.getElementById('mover-baixo');
+
+// // Para cima
+
+// function moveUp() {
+//   for (let i = 0; i < listChilds.length; i += 1) {
+//     if (listChilds[i].style.backgroundColor === 'rgb(128, 128, 128)') {
+//       const text = listChilds[i].innerHTML;
+//       const text2 = listChilds[i - 1].innerHTML;
+//       const pastChild = listChilds[i - 1];
+//       pastChild.innerHTML = text;
+//       listChilds[i].innerHTML = text2;
+//       pastChild.style.backgroundColor = 'rgb(128, 128, 128)';
+//       listChilds[i].style.backgroundColor = 'white';
+//     }
+//     if (listChilds[i].innerHTML === 'undefined') {
+//       console.log('oi');
+//     }
+//   }
+// }
+// buttonMoveUp.addEventListener('click', moveUp);
+
+// function moveDown() {
+//   for (let i = 0; i < listChilds.length; i += 1) {
+//     if (listChilds[i].style.backgroundColor === 'rgb(128, 128, 128)') {
+//       const text = listChilds[i].innerHTML;
+//       const text2 = listChilds[i + 1].innerHTML;
+//       const nextChild = listChilds[i + 1];
+//       nextChild.innerHTML = text;
+//       listChilds[i].innerHTML = text2;
+//       nextChild.style.backgroundColor = 'rgb(128, 128, 128)';
+//       listChilds[i].style.backgroundColor = 'white';
+//     }
+//   }
+// }
+
+// buttonMoveDown.addEventListener('click', moveDown);
