@@ -1,8 +1,7 @@
 const buttonAdd = document.getElementById('criar-tarefa');
 const list = document.getElementById('lista-tarefas');
 const inputTask = document.getElementById('texto-tarefa');
-const listChilds = list.childNodes;
-
+const listChilds = list.children;
 // Add color
 function selectTask(task) {
   const taskClick = task.target;
@@ -18,6 +17,15 @@ function finishTask(task) {
   const taskClick = task.target;
   console.log(taskClick.className);
   taskClick.classList.toggle('completed');
+}
+
+// Adicionar Tarefa(value)
+
+function addTaskValue(value) {
+  for (let i = 0; i < value; i += 1) {
+    const createLi = document.createElement('li');
+    list.appendChild(createLi);
+  }
 }
 
 // Adicionar Tarefa
@@ -60,6 +68,27 @@ function removeFinishItems() {
 
 clearFinishButton.addEventListener('click', removeFinishItems);
 
+// Salvar lista de tarefas
+const buttonSave = document.getElementById('salvar-tarefas');
+function saveTask() {
+  const objSave = {};
+  const objSaveStyleClass = {};
+  if (listChilds.length === 0) {
+    localStorage.removeItem('SaveTask');
+  }
+  for (let i = 0; i < listChilds.length; i += 1) {
+    const keyObj = `task${i}`;
+    const keyObj1 = `backgroundColor${i}`;
+    const keyObj2 = `class${i}`;
+    objSave[keyObj] = listChilds[i].innerHTML;
+    objSaveStyleClass[keyObj1] = listChilds[i].style.backgroundColor;
+    objSaveStyleClass[keyObj2] = listChilds[i].className;
+    localStorage.setItem('SaveTask', JSON.stringify(objSave));
+    localStorage.setItem('SaveStyleClass', JSON.stringify(objSaveStyleClass));
+  }
+}
+buttonSave.addEventListener('click', saveTask);
+
 // // Mover para cima ou para baixo item selecionado.
 
 // const buttonMoveUp = document.getElementById('mover-cima');
@@ -100,3 +129,28 @@ clearFinishButton.addEventListener('click', removeFinishItems);
 // }
 
 // buttonMoveDown.addEventListener('click', moveDown);
+
+// Criar lista salva e adicionar os dados
+function createSavedTask() {
+  const localTaksParse = JSON.parse(localStorage.getItem('SaveTask'));
+  const localStyleClassParse = JSON.parse(localStorage.getItem('SaveStyleClass'));
+  if (localTaksParse === null) {
+    console.log('Null');
+  } else {
+    const localTaskLength = Object.keys(localTaksParse).length;
+    addTaskValue(localTaskLength);
+    for (let i = 0; i < listChilds.length; i += 1) {
+      listChilds[i].innerHTML = localTaksParse[`task${i}`];
+      listChilds[i].style.backgroundColor = localStyleClassParse[`backgroundColor${i}`];
+      listChilds[i].className = localStyleClassParse[`class${i}`];
+    }
+  }
+}
+
+window.onload = () => {
+  createSavedTask();
+  for (let i = 0; i < listChilds.length; i += 1) {
+    listChilds[i].addEventListener('click', selectTask);
+    listChilds[i].addEventListener('dblclick', finishTask);
+  }
+};
