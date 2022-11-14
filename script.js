@@ -6,9 +6,9 @@ const listChilds = list.children;
 function selectTask(task) {
   const taskClick = task.target;
   for (let i = 0; i < listChilds.length; i += 1) {
-    listChilds[i].style = 'white';
+    listChilds[i].classList.remove('gray');
   }
-  taskClick.style.backgroundColor = 'rgb(128, 128, 128)';
+  taskClick.classList.add('gray');
 }
 
 // Double click risk
@@ -56,7 +56,7 @@ const clearFinishButton = document.getElementById('remover-finalizados');
 function removeFinishItems() {
   let count = 0;
   for (let i = 0; i < listChilds.length; i += 1) {
-    if (listChilds[i].className === 'completed') {
+    if (listChilds[i].classList.contains('completed')) {
       count += 1;
       listChilds[i].remove();
       for (let i2 = 1; i2 <= count; i2 += 1) {
@@ -91,46 +91,62 @@ buttonSave.addEventListener('click', saveTask);
 
 // // Mover para cima ou para baixo item selecionado.
 
-// const buttonMoveUp = document.getElementById('mover-cima');
-// const buttonMoveDown = document.getElementById('mover-baixo');
+const buttonMoveUp = document.getElementById('mover-cima');
+const buttonMoveDown = document.getElementById('mover-baixo');
 
 // // Para cima
 
-// function moveUp() {
-//   for (let i = 0; i < listChilds.length; i += 1) {
-//     if (listChilds[i].style.backgroundColor === 'rgb(128, 128, 128)') {
-//       const text = listChilds[i].innerHTML;
-//       const text2 = listChilds[i - 1].innerHTML;
-//       const pastChild = listChilds[i - 1];
-//       pastChild.innerHTML = text;
-//       listChilds[i].innerHTML = text2;
-//       pastChild.style.backgroundColor = 'rgb(128, 128, 128)';
-//       listChilds[i].style.backgroundColor = 'white';
-//     }
-//     if (listChilds[i].innerHTML === 'undefined') {
-//       console.log('oi');
-//     }
-//   }
-// }
-// buttonMoveUp.addEventListener('click', moveUp);
+function moveUp() {
+  for (let i = 0; i < listChilds.length; i += 1) {
+    if (listChilds[i].classList.contains('gray')) {
+      let negative = i - 1;
+      if (negative < 0) {
+        negative = 0;
+      }
+      const text = listChilds[i].innerHTML;
+      const text2 = listChilds[negative].innerHTML;
+      const pastChild = listChilds[negative];
+      console.log(`pastChild: ${negative}`);
+      console.log(`atual: ${i}`);
+      pastChild.innerHTML = text;
+      listChilds[i].innerHTML = text2;
+      pastChild.classList.add('gray');
+      listChilds[i].classList.remove('gray');
+      if (i === 0) {
+        listChilds[0].classList.add('gray');
+      }
+    }
+  }
+}
+buttonMoveUp.addEventListener('click', moveUp);
 
-// function moveDown() {
-//   for (let i = 0; i < listChilds.length; i += 1) {
-//     if (listChilds[i].style.backgroundColor === 'rgb(128, 128, 128)') {
-//       const text = listChilds[i].innerHTML;
-//       const text2 = listChilds[i + 1].innerHTML;
-//       const nextChild = listChilds[i + 1];
-//       nextChild.innerHTML = text;
-//       listChilds[i].innerHTML = text2;
-//       nextChild.style.backgroundColor = 'rgb(128, 128, 128)';
-//       listChilds[i].style.backgroundColor = 'white';
-//     }
-//   }
-// }
+function moveDown() {
+  for (let i = listChilds.length - 1; i >= 0; i -= 1) {
+    if (listChilds[i].classList.contains('gray')) {
+      let positive = i + 1;
+      if (positive >= listChilds.length) {
+        positive = i;
+      }
+      const text = listChilds[i].innerHTML;
+      const text2 = listChilds[positive].innerHTML;
+      const nextChild = listChilds[positive];
+      console.log(`atual: ${i}`);
+      console.log('Next child: ' + positive);
+      nextChild.innerHTML = text;
+      listChilds[i].innerHTML = text2;
+      nextChild.classList.add('gray');
+      listChilds[i].classList.remove('gray');
+      if (i === listChilds.length - 1) {
+        listChilds[i].classList.add('gray');
+      }
+    }
+  }
+}
 
-// buttonMoveDown.addEventListener('click', moveDown);
+buttonMoveDown.addEventListener('click', moveDown);
 
 // Criar lista salva e adicionar os dados
+
 function createSavedTask() {
   const localTaksParse = JSON.parse(localStorage.getItem('SaveTask'));
   const localStyleClassParse = JSON.parse(localStorage.getItem('SaveStyleClass'));

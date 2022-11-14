@@ -6,6 +6,10 @@ li {
   background-color: rgb(128, 128, 128);
 }
 
+.white {
+  background-color: white;
+}
+
 .completed {
   text-decoration: line-through solid black;
 }
