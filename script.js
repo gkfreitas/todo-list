@@ -162,6 +162,16 @@ function createSavedTask() {
     }
   }
 }
+// Remover selecionado
+const removeSelectButton = document.getElementById('remover-selecionado');
+function removeSelect() {
+  for (let i = 0; i < listChilds.length; i += 1) {
+    if (listChilds[i].classList.contains('gray')) {
+      listChilds[i].remove();
+    }
+  }
+}
+removeSelectButton.addEventListener('click', removeSelect);
 
 window.onload = () => {
   createSavedTask();
